@@ -1,11 +1,11 @@
 from argparse import ArgumentParser
-
 from tensorflow.keras.preprocessing.text import Tokenizer
+import os, sys, imp
 import tensorflow
 from tensorflow.keras import optimizers
 from tensorflow.keras.models import model_from_json, load_model
-from tensorflow.keras import backend as K
 from tensorflow.keras.preprocessing.sequence import pad_sequences
+from utils import precision, split_input_to_unigram, map_label_to_character
 
 def parse_args():
     parser = ArgumentParser()
@@ -14,42 +14,6 @@ def parse_args():
     parser.add_argument("resources_path", help="The path of the resources needed to load your model")
 
     return parser.parse_args()
-
-def precision(y_true, y_pred):
-    """Precision metric.
-    Only computes a batch-wise average of precision. Computes the precision, a
-    metric for multi-label classification of how many selected items are
-    relevant.
-    """
-    true_positives = K.sum(K.round(K.clip(y_true * y_pred, 0, 1)))
-    predicted_positives = K.sum(K.round(K.clip(y_pred, 0, 1)))
-    precision = true_positives / (predicted_positives + K.epsilon())
-    return precision
-
-def split_input_to_unigram(line):
-    """
-    :param sentence Sentence as str
-    :return bigrams List of bigrams
-    """
-    unigrams = []
-    line = line.rstrip()
-    for i in range(len(line)):
-        unigram = line[i]
-        unigrams.append(unigram)
-    return unigrams
-
-# 0,1,2,3 in the label exactly match B,E,I,S
-def map_label_to_character(array):
-    for x in array:
-        if x == 0:
-            array[array.index(x)] = "B"
-        elif x == 1:
-            array[array.index(x)] = "E"
-        elif x == 2:
-            array[array.index(x)] = "I"
-        elif x == 3:
-            array[array.index(x)] = "S"
-    return "".join(array)
 
 def predict(input_path, output_path, resources_path):
     """

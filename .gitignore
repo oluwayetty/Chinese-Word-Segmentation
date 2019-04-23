@@ -7,3 +7,5 @@ wang2vec
 code/compare.py
 code/merge.py
 code/split_ngram.py
+resources/gold.txt
+resources/ouput.txt
