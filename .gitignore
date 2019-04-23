@@ -9,3 +9,4 @@ code/merge.py
 code/split_ngram.py
 resources/gold.txt
 resources/ouput.txt
+resources/input.txt
