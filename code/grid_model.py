@@ -211,7 +211,7 @@ params_dict = {
 }
 
 grid = GridSearchCV(model,
-                    cv=3,
+                    cv=5,
                     param_grid=params_dict,
                     return_train_score=True,
                     scoring=scorer_callback)

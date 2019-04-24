@@ -5,7 +5,7 @@ sample_files
 data
 wang2vec
 resources/gold.txt
-resources/ouput.txt
+resources/output.txt
 resources/input.txt
 Homework_1_nlp.pdf
 code/compare.py
