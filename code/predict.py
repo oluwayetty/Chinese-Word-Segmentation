@@ -1,6 +1,5 @@
 from argparse import ArgumentParser
 from tensorflow.keras.preprocessing.text import Tokenizer
-import os, sys, imp
 import tensorflow
 from tensorflow.keras import optimizers
 from tensorflow.keras.models import model_from_json, load_model

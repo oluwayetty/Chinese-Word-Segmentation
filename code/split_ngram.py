@@ -1,10 +1,11 @@
 outfile= '/path/to/directory/file'
 infile = '/path/to/directory/file'
 
+# writes each ngram per line into a new file
 def write_file(list):
-    with open(outfile, mode="a") as outfile:
-        for unigram in list:
-            outfile.write(unigram + "\n")
+    with open(outfile, mode="a") as o_file:
+        for ngram in list:
+            o_file.write(ngram + "\n")
 
 # function to split a file into bigram per line
 def split_into_bigrams(sentence: str):
