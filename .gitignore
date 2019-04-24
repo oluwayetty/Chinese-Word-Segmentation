@@ -1,13 +1,11 @@
 
 .DS_Store
 simplified_data
-sample_files
 data
 wang2vec
 resources/gold.txt
 resources/output.txt
 resources/input.txt
-Homework_1_nlp.pdf
 code/compare.py
 code/merge.py
 __pycache__
