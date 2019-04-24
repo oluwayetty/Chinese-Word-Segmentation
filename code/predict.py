@@ -36,12 +36,12 @@ def predict(input_path, output_path, resources_path):
     loaded_model = model_from_json(loaded_model_json)
 
     # load weights into new model
-    loaded_model.load_weights(resources_path+ '/weights.h5')
+    loaded_model.load_weights(resources_path+'/weights.h5')
     print("Loaded model from disk")
 
     # evaluate loaded model on test data
-    # sgd = optimizers.SGD(lr=0.04, momentum=0.95)
-    loaded_model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=[precision])
+    sgd = optimizers.SGD(lr=0.04, momentum=0.95)
+    loaded_model.compile(loss='categorical_crossentropy', optimizer=sgd, metrics=[precision])
 
     with open(input_path, 'r') as file:
         for line in file:
