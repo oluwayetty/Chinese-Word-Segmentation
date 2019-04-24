@@ -14,25 +14,23 @@ print(tensorflow.__version__)
 
 import pandas
 import numpy as np
-import pickle  
-import time  
+import pickle
+import time
 import json
 from sklearn import metrics
-from sklearn.preprocessing import OneHotEncoder, LabelEncoder
-from sklearn.model_selection import train_test_split
-from sklearn.model_selection import GridSearchCV
+from sklearn.preprocessing import LabelEncoder
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras import backend as K
-from tensorflow.keras.wrappers.scikit_learn import KerasClassifier
-from tensorflow.keras import optimizers
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Embedding, Dense, Bidirectional, Activation, LSTM,Dropout, InputLayer
-from tensorflow.keras.callbacks import ModelCheckpoint, CSVLogger
+from tensorflow.keras.callbacks import ModelCheckpoint, CSVLogger, EarlyStopping
 from gensim.models import KeyedVectors
 from imblearn.over_sampling import SMOTE
+from tensorflow.keras.utils import to_categorical
+from sklearn.metrics import classification_report
+from sklearn.utils import class_weight
 import matplotlib.pyplot as plt
-
 
 # In[3]:
 
@@ -41,7 +39,7 @@ df = pandas.read_table('asmsr/unigram_input.utf8', header=None)
 label = pandas.read_table('asmsr/unigram_label.txt', header=None)
 
 
-#validation data 
+#validation data
 
 df_val = pandas.read_table('asmsr_val/asmsr_unigram_input.txt', header=None)
 label_val = pandas.read_table('asmsr_val/asmsr_unigram_label.txt', header=None)
@@ -188,15 +186,15 @@ for word, i in word_index.items():
 # In[18]:
 
 
-def precision(y_true, y_pred):	
-    """Precision metric.	
+def precision(y_true, y_pred):
+    """Precision metric.
     Only computes a batch-wise average of precision. Computes the precision, a
     metric for multi-label classification of how many selected items are
     relevant.
-    """	
-    true_positives = K.sum(K.round(K.clip(y_true * y_pred, 0, 1)))	
-    predicted_positives = K.sum(K.round(K.clip(y_pred, 0, 1)))	
-    precision = true_positives / (predicted_positives + K.epsilon())	
+    """
+    true_positives = K.sum(K.round(K.clip(y_true * y_pred, 0, 1)))
+    predicted_positives = K.sum(K.round(K.clip(y_pred, 0, 1)))
+    precision = true_positives / (predicted_positives + K.epsilon())
     return precision
 
 
@@ -220,8 +218,6 @@ def build_model(char_size, dropout, lr, optimizer):
 # In[22]:
 
 
-from tensorflow.keras.utils import to_categorical
-
 y = to_categorical(train_labels_resampled, 4)
 y_val_test = to_categorical(validation_label_resampled,4)
 
@@ -236,7 +232,6 @@ print(y_val_test.shape)
 # In[31]:
 
 
-from sklearn.utils import class_weight
 
 class_weights_ = class_weight.compute_class_weight('balanced',
                                                  np.unique(train_labels),
@@ -247,10 +242,6 @@ class_weights_
 
 
 # In[ ]:
-
-
-from tensorflow.keras.callbacks import EarlyStopping
-
 es = EarlyStopping(monitor='val_loss', mode='min', verbose=1)
 
 filepath="resources/weights-improvement-{epoch:02d}-{precision:.2f}.hdf5"
@@ -261,7 +252,7 @@ callbacks_list = [checkpoint,csv_logger,es]
 model = build_model(256, 0.2, 0.04, 'sgd')
 
 history = model.fit(train_data_resampled, y, validation_data = ( validation_data_resampled, y_val_test ), epochs=5, class_weight=class_weights_, batch_size=10, callbacks=callbacks_list, verbose=1)
-    
+
 
 # serialize model to JSON
 model_json = model.to_json()
@@ -319,12 +310,6 @@ plt.show()
 # plt.savefig('resources/Loss plot.png')
 
 
-# In[43]:
-
-
-from sklearn.metrics import classification_report
-
-
 # In[44]:
 
 
@@ -346,7 +331,3 @@ print(classification_report(y_true, y_pred, target_names=['0', '1', '2', '3']))
 
 
 # In[ ]:
-
-
-
-
