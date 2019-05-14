@@ -11,8 +11,6 @@
   |__ sample_labels.txt # the correct BIES tags for sample_lines.txt. This is the format score.py accepts.
 - resources 	# any additional resource that predict.py should use must be placed in here
 - README.md # this file
-- Homework_1_nlp.pdf # the slides presenting this homework
-- report.pdf	# your report
 ```
 
 ## Instructions
