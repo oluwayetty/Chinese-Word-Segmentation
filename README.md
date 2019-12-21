@@ -5,19 +5,18 @@ Implemented a state-of-the-art word segmenter model in Tensorflow/Keras using Ch
 
 ## Example in the English world
 Input: This is a NLP project AND Output: BIIE BE S BIE BIIIIIE
-● B means Beginning of a word
-● I mean In the middle of a word
-● E means End of a word
-● S means single, more examples of this are ".", "a", "," etc.
-
+* B means Beginning of a word
+* I mean In the middle of a word
+* E means End of a word
+* S means single, more examples of this are ".", "a", "," etc.
 ![](https://github.com/oluwayetty/word-sense-disambiguition/blob/master/bies.jpg)
 
 ## Dataset Description 
 I made use of the datasets which can be downloaded [here](http://sighan.cs.uchicago.edu/bakeoff2005/). The full dataset contains four smaller datasets:
-● AS (Traditional Chinese)
-● CITYU (Traditional Chinese)
-● MSR (Simplified Chinese)
-● PKU (Simplified Chinese)
+* AS (Traditional Chinese)
+* CITYU (Traditional Chinese)
+* MSR (Simplified Chinese)
+* PKU (Simplified Chinese)
 Note that you are responsible to convert the Traditional Chinese datasets to Simplified Chinese by Installing [HanziConv](https://pypi.org/project/hanziconv/0.3/) and run the following command: ```hanzi-convert -s infile > outfile```
 
 ## Repository skeleton
