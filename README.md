@@ -1,4 +1,4 @@
-![Model Architecture](https://github.com/oluwayetty/word-sense-disambiguition/blob/master/model.jpg)
+![Model Architecture](https://github.com/oluwayetty/Chinese-Word-Segmentation/blob/master/model.jpg)
 
 ## Problem 
 Implemented a state-of-the-art word segmenter model in Tensorflow/Keras using Chinese characters. The image below shows the summary of this project, the input, and the corresponding output. The BIES format is a way to encode the output of a word segmenter model. There are 4 classes the model has to predict. 
